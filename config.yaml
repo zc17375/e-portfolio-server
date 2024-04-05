@@ -65,14 +65,13 @@ cors:
           allow-credentials: true # 布尔值
 
 # mysql connect configuration
-# 未初始化之前请勿手动修改数据库信息！！！如果一定要手动初始化请看（https://gin-vue-admin.com/docs/first_master）
 mysql:
     path: ""
-    port: ""
+    port: "3306"
     config: ""
-    db-name: ""
-    username: ""
-    password: ""
+    db-name: "portfolio"
+    username: "root"
+    password: "root"
     max-idle-conns: 10
     max-open-conns: 100
     log-mode: ""
