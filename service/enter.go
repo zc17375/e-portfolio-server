@@ -1,6 +1,7 @@
 package service
 
 type ServiceGroup struct {
+	AuthService
 	HelloService
 }
 

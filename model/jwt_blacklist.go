@@ -1,4 +1,4 @@
-package system
+package model
 
 import "github.com/zc17375/e-portfolio-server/global"
 

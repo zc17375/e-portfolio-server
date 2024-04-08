@@ -7,6 +7,13 @@ import (
 	"go.uber.org/zap"
 )
 
+// @title                       E-Portfolio Swagger API接口文件
+// @version                     v1.0.0
+// @description                 使用golang gin開發全端個人作品集網站
+// @securityDefinitions.apikey  ApiKeyAuth
+// @in                          header
+// @name                        x-token
+// @BasePath                    /
 func main() {
 	// 初始化相關設定
 	global.EP_VP = cmd.Viper() // 初始化Viper
@@ -14,7 +21,7 @@ func main() {
 	// 日誌配置初始化
 	global.EP_LOG = cmd.Zap()
 	zap.ReplaceGlobals(global.EP_LOG)
-	global.EP_LOG.Info("Server相關初始化成功!!")
+	global.EP_LOG.Info("Server相關設置初始化成功!!")
 
 	// 數據庫配置初始化
 	global.EP_DB = initialize.Gorm() // gorm連線資料庫

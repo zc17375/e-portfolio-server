@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/zc17375/e-portfolio-server/global"
-	"github.com/zc17375/e-portfolio-server/model/system"
+	"github.com/zc17375/e-portfolio-server/model"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
@@ -23,9 +23,9 @@ func RegisterTables() {
 	err := db.AutoMigrate(
 		// 新增相關Table Struct
 		// system.SysApi{},
-		// system.SysUser{},
+		model.User{},
 		// system.SysBaseMenu{},
-		system.JwtBlacklist{},
+		model.JwtBlacklist{},
 		// system.SysAuthority{},
 		// system.SysDictionary{},
 		// system.SysOperationRecord{},
