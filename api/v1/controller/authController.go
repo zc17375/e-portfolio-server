@@ -15,8 +15,8 @@ type AuthApi struct{}
 // @Tags     Auth
 // @Summary  會員登入
 // @Produce   application/json
-// @Param    data  body      request.Login                                             true  "用户名, 密码, 验证码"
-// @Success  200   {object}  common.Response{data=response.LoginResponse,msg=string}  "返回包括用户信息,token,过期时间"
+// @Param    data  body      request.Login   true  "使用者名稱, 密碼, 驗證碼"
+// @Success  200   {object}  common.Response{data=response.LoginResponse,msg=string}  "返回使用者資訊,token,過期時間"
 // @Router   /v1/auth/login [post]
 func (u *AuthApi) Login(c *gin.Context) {
 	var l request.Login
@@ -40,6 +40,7 @@ func (u *AuthApi) Login(c *gin.Context) {
 	}
 	// 生成Token
 	// u.TokenNext(c, *user)
-	return
+	common.FailWithMessage(global.Translate("sys_user.vCodeErr"), c)
+
 
 }

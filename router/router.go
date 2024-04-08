@@ -3,7 +3,7 @@ package router
 // 註冊Router
 type RouterGroup struct {
 	AuthRouter
-	HelloRouter
+	// HelloRouter
 	// UserRouter
 }
 

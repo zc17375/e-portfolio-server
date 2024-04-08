@@ -16,7 +16,7 @@ func Routers() *gin.Engine {
 
 	routers := router.RouterGroupApp
 
-	Router.GET(global.EP_CONFIG.System.RouterPrefix+"/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	global.EP_LOG.Info("register swagger handler")
 
 	PublicGroup := Router.Group(global.EP_CONFIG.System.RouterPrefix)

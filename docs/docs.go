@@ -21,12 +21,12 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Base"
+                    "Auth"
                 ],
                 "summary": "會員登入",
                 "parameters": [
                     {
-                        "description": "用户名, 密码, 验证码",
+                        "description": "使用者名稱, 密碼, 驗證碼",
                         "name": "data",
                         "in": "body",
                         "required": true,
@@ -37,7 +37,7 @@ const docTemplate = `{
                 ],
                 "responses": {
                     "200": {
-                        "description": "返回包括用户信息,token,过期时间",
+                        "description": "返回使用者資訊,token,過期時間",
                         "schema": {
                             "allOf": [
                                 {
