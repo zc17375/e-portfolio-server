@@ -97,8 +97,13 @@ const docTemplate = `{
                     "description": "主鍵ID",
                     "type": "integer"
                 },
+                "jwt_token": {
+                    "type": "string"
+                },
+                "last_login_at": {
+                    "type": "string"
+                },
                 "nickName": {
-                    "description": "用户昵称",
                     "type": "string"
                 },
                 "phone": {
@@ -123,20 +128,20 @@ const docTemplate = `{
             "type": "object",
             "required": [
                 "captcha",
-                "password",
-                "username"
+                "email",
+                "password"
             ],
             "properties": {
                 "captcha": {
                     "description": "驗證碼",
                     "type": "string"
                 },
-                "password": {
-                    "description": "密碼",
+                "email": {
+                    "description": "帳號",
                     "type": "string"
                 },
-                "username": {
-                    "description": "帳號",
+                "password": {
+                    "description": "密碼",
                     "type": "string"
                 }
             }

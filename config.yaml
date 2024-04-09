@@ -68,7 +68,7 @@ cors:
 mysql:
     path: ""
     port: "3306"
-    config: ""
+    config: "parseTime=true"
     db-name: "portfolio"
     username: "root"
     password: "root"

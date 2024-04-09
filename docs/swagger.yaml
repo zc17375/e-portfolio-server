@@ -24,8 +24,11 @@ definitions:
       id:
         description: 主鍵ID
         type: integer
+      jwt_token:
+        type: string
+      last_login_at:
+        type: string
       nickName:
-        description: 用户昵称
         type: string
       phone:
         description: 手機號碼
@@ -45,16 +48,16 @@ definitions:
       captcha:
         description: 驗證碼
         type: string
+      email:
+        description: 帳號
+        type: string
       password:
         description: 密碼
         type: string
-      username:
-        description: 帳號
-        type: string
     required:
     - captcha
+    - email
     - password
-    - username
     type: object
   response.LoginResponse:
     properties:

@@ -26,5 +26,10 @@ go get -u github.com/swaggo/files
 # UUID
 go get github.com/google/uuid
 
+# JWT
+go get github.com/golang-jwt/jwt/v5
+
+
+
 
 ```
