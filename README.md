@@ -1,6 +1,13 @@
 # e-portfolio-server
 e-portfolio-server
 
+# mysql database
+```
+    docker run -p 3306:3306 -d --name mysql -e MYSQL_ROOT_PASSWORD=root -e TZ=Asia/Taipei mysql:latest
+
+
+```
+
 
 # Install related Dependency packages
 ```

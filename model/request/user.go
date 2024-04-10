@@ -1,9 +1,9 @@
 package request
 
 type Login struct {
-	Email  string `json:"email" binding:"required"`  // 帳號
+	Account  string `json:"account" binding:"required"`  // 帳號
 	Password  string `json:"password" binding:"required"`  // 密碼
-	Captcha   string `json:"captcha" binding:"required"`   // 驗證碼
+	// Captcha   string `json:"captcha" binding:"required"`   // 驗證碼
 }
 
 type Register struct {

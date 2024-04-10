@@ -16,7 +16,7 @@ func (as *AuthService) Login(u *model.User) (*model.User, error) {
 	}
 
 	var user model.User
-	err := global.EP_DB.Where("email = ?", u.Email).First(&user).Error
+	err := global.EP_DB.Where("email = ? OR phone = ?", u.Email, u.Email).First(&user).Error
 	if err == nil {
 		// if ok := utils.BcryptCheck(u.Password, user.Password); !ok {
 		// 	return nil, errors.New("帳號或密碼錯誤")

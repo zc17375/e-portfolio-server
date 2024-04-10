@@ -26,7 +26,7 @@ const docTemplate = `{
                 "summary": "會員登入",
                 "parameters": [
                     {
-                        "description": "使用者名稱, 密碼, 驗證碼",
+                        "description": "帳號, 密碼",
                         "name": "data",
                         "in": "body",
                         "required": true,
@@ -81,13 +81,13 @@ const docTemplate = `{
                     "description": "創建時間",
                     "type": "string"
                 },
+                "disable": {
+                    "description": "帳號是否註銷",
+                    "type": "integer"
+                },
                 "email": {
                     "description": "電子信箱",
                     "type": "string"
-                },
-                "enable": {
-                    "description": "帳號是否註銷",
-                    "type": "integer"
                 },
                 "headerImg": {
                     "description": "用户头像",
@@ -127,16 +127,11 @@ const docTemplate = `{
         "request.Login": {
             "type": "object",
             "required": [
-                "captcha",
-                "email",
+                "account",
                 "password"
             ],
             "properties": {
-                "captcha": {
-                    "description": "驗證碼",
-                    "type": "string"
-                },
-                "email": {
+                "account": {
                     "description": "帳號",
                     "type": "string"
                 },

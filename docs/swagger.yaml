@@ -12,12 +12,12 @@ definitions:
       createdAt:
         description: 創建時間
         type: string
+      disable:
+        description: 帳號是否註銷
+        type: integer
       email:
         description: 電子信箱
         type: string
-      enable:
-        description: 帳號是否註銷
-        type: integer
       headerImg:
         description: 用户头像
         type: string
@@ -45,18 +45,14 @@ definitions:
     type: object
   request.Login:
     properties:
-      captcha:
-        description: 驗證碼
-        type: string
-      email:
+      account:
         description: 帳號
         type: string
       password:
         description: 密碼
         type: string
     required:
-    - captcha
-    - email
+    - account
     - password
     type: object
   response.LoginResponse:
@@ -77,7 +73,7 @@ paths:
   /v1/auth/login:
     post:
       parameters:
-      - description: 使用者名稱, 密碼, 驗證碼
+      - description: 帳號, 密碼
         in: body
         name: data
         required: true
