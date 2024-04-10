@@ -47,9 +47,11 @@ definitions:
     properties:
       account:
         description: 帳號
+        example: 使用者帳號
         type: string
       password:
         description: 密碼
+        example: 密碼
         type: string
     required:
     - account

@@ -133,11 +133,13 @@ const docTemplate = `{
             "properties": {
                 "account": {
                     "description": "帳號",
-                    "type": "string"
+                    "type": "string",
+                    "example": "使用者帳號"
                 },
                 "password": {
                     "description": "密碼",
-                    "type": "string"
+                    "type": "string",
+                    "example": "密碼"
                 }
             }
         },

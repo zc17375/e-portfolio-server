@@ -23,7 +23,7 @@ type AuthApi struct{}
 // @Param    data  body      request.Login   true  "帳號, 密碼"
 // @Success  200   {object}  common.Response{data=response.LoginResponse,msg=string}  "返回使用者資訊,token,過期時間"
 // @Router   /v1/auth/login [post]
-func (u *AuthApi) Login(c *gin.Context) {
+func (a *AuthApi) Login(c *gin.Context) {
 	var l request.Login
 	err := c.ShouldBindJSON(&l)
 	if err != nil {
@@ -44,10 +44,11 @@ func (u *AuthApi) Login(c *gin.Context) {
 		return
 	}
 	// 取得Token並返回結果
-	u.GenerateToken(c, *user)
+	a.GenerateToken(c, *user)
 }
 
-func (u *AuthApi) GenerateToken(c *gin.Context, user model.User) {
+// 生成Auth Token
+func (a *AuthApi) GenerateToken(c *gin.Context, user model.User) {
 	j := &utils.JWT{SigningKey: []byte(global.EP_CONFIG.Jwt.SigningKey)} // 唯一签名
 	claims := j.CreateClaims(request.BaseClaims{
 		UUID:        user.UUID,
@@ -77,5 +78,16 @@ func (u *AuthApi) GenerateToken(c *gin.Context, user model.User) {
 		User:      user,
 		ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix() * 1000,
 	}, "登入成功", c)
+
+}
+
+// 會員註冊
+func (a *AuthApi) Register(c *gin.Context) {
+	var r request.Register
+	err := c.ShouldBindJSON(&r)
+	if err != nil {
+		common.FailWithMessage(err.Error(), c)
+		return
+	}
 
 }
