@@ -26,7 +26,7 @@ const docTemplate = `{
                 "summary": "會員登入",
                 "parameters": [
                     {
-                        "description": "帳號, 密碼",
+                        "description": "信箱或手機號碼, 密碼",
                         "name": "data",
                         "in": "body",
                         "required": true,
@@ -48,6 +48,51 @@ const docTemplate = `{
                                     "properties": {
                                         "data": {
                                             "$ref": "#/definitions/response.LoginResponse"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/auth/register": {
+            "post": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "會員註冊",
+                "parameters": [
+                    {
+                        "description": "使用者名稱, 密碼, 暱稱, 頭貼網址, 手機號碼, 信箱",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.Register"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "會員註冊,返回會員註冊訊息",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/common.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/definitions/response.UserResponse"
                                         },
                                         "msg": {
                                             "type": "string"
@@ -134,12 +179,47 @@ const docTemplate = `{
                 "account": {
                     "description": "帳號",
                     "type": "string",
-                    "example": "使用者帳號"
+                    "example": "信箱或密碼"
                 },
                 "password": {
                     "description": "密碼",
                     "type": "string",
                     "example": "密碼"
+                }
+            }
+        },
+        "request.Register": {
+            "type": "object",
+            "required": [
+                "email",
+                "passWord",
+                "phone",
+                "userName"
+            ],
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "123@gmail.com"
+                },
+                "headerImg": {
+                    "type": "string",
+                    "example": "http://headimgurl.com"
+                },
+                "nickName": {
+                    "type": "string",
+                    "example": "Ed"
+                },
+                "passWord": {
+                    "type": "string",
+                    "example": "123456"
+                },
+                "phone": {
+                    "type": "string",
+                    "example": "0912345678"
+                },
+                "userName": {
+                    "type": "string",
+                    "example": "Edward"
                 }
             }
         },
@@ -152,6 +232,14 @@ const docTemplate = `{
                 "token": {
                     "type": "string"
                 },
+                "user": {
+                    "$ref": "#/definitions/model.User"
+                }
+            }
+        },
+        "response.UserResponse": {
+            "type": "object",
+            "properties": {
                 "user": {
                     "$ref": "#/definitions/model.User"
                 }

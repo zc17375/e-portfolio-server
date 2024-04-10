@@ -17,5 +17,6 @@ func (s *AuthRouter) GetAuthRouter(Router *gin.RouterGroup) {
 	authApi := v1.ApiGroupApp.AuthApi
 	{
 		userRouter.POST("login", authApi.Login)               // 會員登入
+		userRouter.POST("register", authApi.Register)               // 會員登入
 	}
 }

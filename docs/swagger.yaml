@@ -47,7 +47,7 @@ definitions:
     properties:
       account:
         description: 帳號
-        example: 使用者帳號
+        example: 信箱或密碼
         type: string
       password:
         description: 密碼
@@ -57,12 +57,43 @@ definitions:
     - account
     - password
     type: object
+  request.Register:
+    properties:
+      email:
+        example: 123@gmail.com
+        type: string
+      headerImg:
+        example: http://headimgurl.com
+        type: string
+      nickName:
+        example: Ed
+        type: string
+      passWord:
+        example: "123456"
+        type: string
+      phone:
+        example: "0912345678"
+        type: string
+      userName:
+        example: Edward
+        type: string
+    required:
+    - email
+    - passWord
+    - phone
+    - userName
+    type: object
   response.LoginResponse:
     properties:
       expiresAt:
         type: integer
       token:
         type: string
+      user:
+        $ref: '#/definitions/model.User'
+    type: object
+  response.UserResponse:
+    properties:
       user:
         $ref: '#/definitions/model.User'
     type: object
@@ -75,7 +106,7 @@ paths:
   /v1/auth/login:
     post:
       parameters:
-      - description: 帳號, 密碼
+      - description: 信箱或手機號碼, 密碼
         in: body
         name: data
         required: true
@@ -96,6 +127,32 @@ paths:
                   type: string
               type: object
       summary: 會員登入
+      tags:
+      - Auth
+  /v1/auth/register:
+    post:
+      parameters:
+      - description: 使用者名稱, 密碼, 暱稱, 頭貼網址, 手機號碼, 信箱
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/request.Register'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 會員註冊,返回會員註冊訊息
+          schema:
+            allOf:
+            - $ref: '#/definitions/common.Response'
+            - properties:
+                data:
+                  $ref: '#/definitions/response.UserResponse'
+                msg:
+                  type: string
+              type: object
+      summary: 會員註冊
       tags:
       - Auth
 securityDefinitions:

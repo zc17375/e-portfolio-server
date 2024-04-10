@@ -1,10 +1,12 @@
 package model
 
 import (
+	"errors"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/zc17375/e-portfolio-server/global"
+	"gorm.io/gorm"
 )
 
 type User struct {
@@ -18,9 +20,11 @@ type User struct {
 	Email       string    `json:"email"  gorm:"comment:電子郵箱"`                             // 電子信箱
 	Disable     int       `json:"disable" gorm:"default:0;comment:是否註銷:0=註銷"`             //帳號是否註銷
 	JwtToken    string    `json:"jwt_token" gorm:"comment:JWT Token;type:text"`
-	LastLoginAt time.Time `json:"last_login_at" gorm:"comment:上次登入時間"`
+	LastLoginAt time.Time `json:"last_login_at" gorm:"default:null;comment:上次登入時間"`
 }
 
-func (User) TableName() string {
-	return "users"
+
+func (model *User) IsUserExist(u User) bool {
+	// 判断手機或信箱是否注册
+	return !errors.Is(global.EP_DB.Where("phone = ? OR email = ?", u.Phone, u.Email).First(model).Error, gorm.ErrRecordNotFound)
 }

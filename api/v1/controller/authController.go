@@ -20,7 +20,7 @@ type AuthApi struct{}
 // @Tags     Auth
 // @Summary  會員登入
 // @Produce   application/json
-// @Param    data  body      request.Login   true  "帳號, 密碼"
+// @Param    data  body      request.Login   true  "信箱或手機號碼, 密碼"
 // @Success  200   {object}  common.Response{data=response.LoginResponse,msg=string}  "返回使用者資訊,token,過期時間"
 // @Router   /v1/auth/login [post]
 func (a *AuthApi) Login(c *gin.Context) {
@@ -31,8 +31,7 @@ func (a *AuthApi) Login(c *gin.Context) {
 		return
 	}
 
-	rUser := &model.User{Email: l.Account, Password: l.Password}
-	user, err := authService.Login(rUser)
+	user, err := authService.Login(&l)
 	if err != nil {
 		global.EP_LOG.Error("登入失敗! 帳號不存在或密碼錯誤!", zap.Error(err))
 		common.FailWithMessage("帳號不存在或密碼錯誤", c)
@@ -81,7 +80,13 @@ func (a *AuthApi) GenerateToken(c *gin.Context, user model.User) {
 
 }
 
-// 會員註冊
+// Register
+// @Tags     Auth
+// @Summary  會員註冊
+// @Produce   application/json
+// @Param    data  body      request.Register                                            true  "使用者名稱, 密碼, 暱稱, 頭貼網址, 手機號碼, 信箱"
+// @Success  200   {object}  common.Response{data=response.UserResponse,msg=string}  "會員註冊,返回會員註冊訊息"
+// @Router   /v1/auth/register [post]
 func (a *AuthApi) Register(c *gin.Context) {
 	var r request.Register
 	err := c.ShouldBindJSON(&r)
@@ -89,5 +94,21 @@ func (a *AuthApi) Register(c *gin.Context) {
 		common.FailWithMessage(err.Error(), c)
 		return
 	}
+
+	user := &model.User{
+		Username: r.Username, 
+		NickName: r.NickName, 
+		Password: r.Password, 
+		HeaderImg: r.HeaderImg,
+		Phone: r.Phone, 
+		Email: r.Email,
+	}
+	userReturn, err := authService.Register(*user)
+	if err != nil {
+		global.EP_LOG.Error("註冊失敗!", zap.Error(err))
+		common.FailWithDetailed(nil, "註冊會員失敗:此信箱或手機號碼已被註冊", c)
+		return
+	}
+	common.OkWithDetailed(response.UserResponse{User: userReturn}, "註冊會員成功", c)
 
 }
