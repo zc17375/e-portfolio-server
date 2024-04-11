@@ -4,7 +4,7 @@ package router
 type RouterGroup struct {
 	AuthRouter
 	// HelloRouter
-	// UserRouter
+	UserRouter
 }
 
 var RouterGroupApp = new(RouterGroup)

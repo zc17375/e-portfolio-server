@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"fmt"
+	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -50,11 +50,11 @@ func (a *AuthApi) Login(c *gin.Context) {
 func (a *AuthApi) GenerateToken(c *gin.Context, user model.User) {
 	j := &utils.JWT{SigningKey: []byte(global.EP_CONFIG.Jwt.SigningKey)} // 唯一签名
 	claims := j.CreateClaims(request.BaseClaims{
-		UUID:        user.UUID,
-		ID:          user.ID,
-		Username:    user.Username,
+		UUID:     user.UUID,
+		ID:       user.ID,
+		Username: user.Username,
 	})
-	
+
 	// 生成Token
 	token, err := j.CreateToken(claims)
 	if err != nil {
@@ -63,18 +63,11 @@ func (a *AuthApi) GenerateToken(c *gin.Context, user model.User) {
 		return
 	}
 
-	// 將token存到DB
-    user.JwtToken = token
+	// 紀錄登入時間
 	user.LastLoginAt = time.Now()
-	fmt.Println(time.Now().Format("2006-01-02 15:04:05"))
-    if err := global.EP_DB.Save(&user).Error; err != nil {
-        global.EP_LOG.Error("DB新增Token失敗!", zap.Error(err))
-		common.FailWithMessage("新增JWT Token失敗", c)
-		return
-    }
-
 	common.OkWithDetailed(response.LoginResponse{
 		User:      user,
+		Token:     token,
 		ExpiresAt: claims.RegisteredClaims.ExpiresAt.Unix() * 1000,
 	}, "登入成功", c)
 
@@ -96,12 +89,12 @@ func (a *AuthApi) Register(c *gin.Context) {
 	}
 
 	user := &model.User{
-		Username: r.Username, 
-		NickName: r.NickName, 
-		Password: r.Password, 
+		Username:  r.Username,
+		NickName:  r.NickName,
+		Password:  r.Password,
 		HeaderImg: r.HeaderImg,
-		Phone: r.Phone, 
-		Email: r.Email,
+		Phone:     r.Phone,
+		Email:     r.Email,
 	}
 	userReturn, err := authService.Register(*user)
 	if err != nil {
@@ -111,4 +104,35 @@ func (a *AuthApi) Register(c *gin.Context) {
 	}
 	common.OkWithDetailed(response.UserResponse{User: userReturn}, "註冊會員成功", c)
 
+}
+
+// Refresh Token
+// @Tags     Auth
+// @Summary  刷新token
+// @Produce   application/json
+// @Success  200
+// @Router   /v1/auth/refresh-token [get]
+// @Security ApiKeyAuth
+func (a *AuthApi) RefreshToken(c *gin.Context) {
+	claims, exists := c.Get("claims")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "No claims found"})
+		return
+	}
+
+	// 将 claims 转换为你自定义的声明结构体类型
+	customClaims, ok := claims.(*request.CustomClaims)
+	if !ok {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Invalid claims type"})
+		return
+	}
+
+	user := model.User{
+		EP_MODEL: global.EP_MODEL{ID: customClaims.BaseClaims.ID},
+		UUID:     customClaims.BaseClaims.UUID,
+		Username: customClaims.BaseClaims.Username,
+	}
+
+	// 取得Token並返回結果
+	a.GenerateToken(c, user)
 }

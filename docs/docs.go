@@ -60,6 +60,27 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/auth/refresh-token": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "刷新token",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/v1/auth/register": {
             "post": {
                 "produces": [
@@ -104,6 +125,27 @@ const docTemplate = `{
                     }
                 }
             }
+        },
+        "/v1/user/portfolio": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "token測試",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -135,15 +177,12 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "headerImg": {
-                    "description": "用户头像",
+                    "description": "會員頭像連結",
                     "type": "string"
                 },
                 "id": {
                     "description": "主鍵ID",
                     "type": "integer"
-                },
-                "jwt_token": {
-                    "type": "string"
                 },
                 "last_login_at": {
                     "type": "string"
@@ -160,11 +199,11 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "userName": {
-                    "description": "用户登录名",
+                    "description": "會員名稱",
                     "type": "string"
                 },
                 "uuid": {
-                    "description": "用户UUID",
+                    "description": "會員UUID",
                     "type": "string"
                 }
             }

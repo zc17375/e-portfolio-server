@@ -7,7 +7,7 @@ import (
 type ApiGroup struct {
 	AuthApi
 	HelloApi
-	// UserApi
+	UserApi
 }
 
 var (

@@ -7,16 +7,18 @@ import (
 
 type AuthRouter struct{}
 
-func (s *AuthRouter) GetAuthRouter(Router *gin.RouterGroup) {
+func (s *AuthRouter) GetAuthRouter(RouterPrt *gin.RouterGroup, RouterPub *gin.RouterGroup)  {
 	// 取使用者相關紀錄
-	userRouter := Router.Group("auth")
+	NonAuthRouter := RouterPub.Group("auth")
+	AuthRouter := RouterPrt.Group("auth")
 	//.Use(middleware.OperationRecord())
 	// 不取使用者相關紀錄
 	// userRouterWithoutRecord := Router.Group("user")
 
 	authApi := v1.ApiGroupApp.AuthApi
 	{
-		userRouter.POST("login", authApi.Login)               // 會員登入
-		userRouter.POST("register", authApi.Register)               // 會員登入
+		NonAuthRouter.POST("login", authApi.Login)               // 會員登入
+		NonAuthRouter.POST("register", authApi.Register)		// 會員註冊
+		AuthRouter.GET("refresh-token", authApi.RefreshToken)               
 	}
 }

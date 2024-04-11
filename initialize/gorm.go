@@ -25,7 +25,6 @@ func RegisterTables() {
 		// system.SysApi{},
 		model.User{},
 		// system.SysBaseMenu{},
-		model.JwtBlacklist{},
 		// system.SysAuthority{},
 		// system.SysDictionary{},
 		// system.SysOperationRecord{},
