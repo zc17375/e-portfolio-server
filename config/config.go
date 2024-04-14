@@ -10,6 +10,10 @@ type Server struct {
 	// gorm
 	Mysql Mysql `mapstructure:"mysql" json:"mysql" yaml:"mysql"`
 
+	// mongo
+	Mongo Mongo `mapstructure:"mongo" json:"mongo" yaml:"mongo"`
+
+
 	// 跨域配置
 	Cors CORS `mapstructure:"cors" json:"cors" yaml:"cors"`
 

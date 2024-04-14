@@ -8,12 +8,13 @@ type ApiGroup struct {
 	AuthApi
 	HelloApi
 	UserApi
+	IndividualApi
 }
 
 var (
 	authService = service.ServiceGroupApp.AuthService
 	helloService = service.ServiceGroupApp.HelloService
-	// userService = service.ServiceGroupApp.UserService
+	individualService = service.ServiceGroupApp.IndividualService
 )
 
 var ApiGroupApp = new(ApiGroup)

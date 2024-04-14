@@ -23,14 +23,30 @@ func main() {
 	zap.ReplaceGlobals(global.EP_LOG)
 	global.EP_LOG.Info("Server相關設置初始化成功!!")
 
-	// 數據庫配置初始化
+	// mysql數據庫配置初始化
 	global.EP_DB = initialize.Gorm() // gorm連線資料庫
 	if global.EP_DB != nil {
 		initialize.RegisterTables() // 初始化表
-		// 程序结束前关闭数据库链接
+		// 程序結束前關閉數據庫連接
 		db, _ := global.EP_DB.DB()
 		defer db.Close()
 	}
+
+	// mongodb數據庫配置初始化
+	global.EP_MongoDB = initialize.InitMongoDB()
+	// mdb := initialize.InitMongoDB()
+
+	// collection := mdb.Collection("students")
+	// // 查询示例文档
+	// var result map[string]interface{}
+	// err := collection.FindOne(context.TODO(), map[string]interface{}{
+	// 	"name": "Patrick",
+	// }).Decode(&result)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// fmt.Println("Found document:", result)
+	defer initialize.Disconnect()
 
 	// 執行伺服器
 	cmd.RunServer()

@@ -3,6 +3,7 @@ package global
 import (
 	"github.com/spf13/viper"
 	"github.com/zc17375/e-portfolio-server/config"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
@@ -14,6 +15,7 @@ var (
 	EP_CONFIG config.Server
 	EP_VP     *viper.Viper
 	EP_LOG                 *zap.Logger
+	EP_MongoDB *mongo.Database
 	// GVA_Timer               timer.Timer = timer.NewTimerTask()
 	// GVA_Concurrency_Control             = &singleflight.Group{}
 

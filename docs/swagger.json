@@ -118,6 +118,38 @@
                 }
             }
         },
+        "/v1/individual/create": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "新增個人經歷資訊",
+                "parameters": [
+                    {
+                        "description": "個人經歷",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Individual"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/v1/user/portfolio": {
             "get": {
                 "security": [
@@ -149,6 +181,115 @@
                 },
                 "data": {},
                 "msg": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Individual": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "john@example.com"
+                },
+                "head_img_path": {
+                    "type": "string",
+                    "example": "/images/john_doe.jpg"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "job_title": {
+                    "type": "string",
+                    "example": "Software Engineer"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "John Doe"
+                },
+                "projects": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Project"
+                    }
+                },
+                "resume_link": {
+                    "type": "string",
+                    "example": "https://example.com/john_doe_resume.pdf"
+                },
+                "skills": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "Golang",
+                        " JavaScript",
+                        " Python"
+                    ]
+                },
+                "social_media": {
+                    "$ref": "#/definitions/model.SocialMedia"
+                },
+                "user_uuid": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Project": {
+            "type": "object",
+            "properties": {
+                "demo_link": {
+                    "type": "string",
+                    "example": "https://example.com/project_x_demo"
+                },
+                "github_rep_link": {
+                    "type": "string",
+                    "example": "https://github.com/johndoe/project_x"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "introduce": {
+                    "type": "string",
+                    "example": "A project for implementing microservices architecture."
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Project X"
+                },
+                "skills": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    },
+                    "example": [
+                        "['Golang'",
+                        " 'Docker'",
+                        " 'Kubernetes']"
+                    ]
+                },
+                "user_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.SocialMedia": {
+            "type": "object",
+            "properties": {
+                "facebook": {
+                    "type": "string",
+                    "example": "johndoe"
+                },
+                "github": {
+                    "type": "string",
+                    "example": "johndoe"
+                },
+                "linkedin": {
+                    "type": "string",
+                    "example": "johndoe"
+                },
+                "user_id": {
                     "type": "string"
                 }
             }
@@ -210,12 +351,12 @@
                 "account": {
                     "description": "帳號",
                     "type": "string",
-                    "example": "信箱或密碼"
+                    "example": "0912345678"
                 },
                 "password": {
                     "description": "密碼",
                     "type": "string",
-                    "example": "密碼"
+                    "example": "123456"
                 }
             }
         },

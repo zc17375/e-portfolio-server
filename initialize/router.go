@@ -38,6 +38,7 @@ func Routers() *gin.Engine {
 	{
 		routers.GetUserRouter(PrivateGroup) // 注册用户路由
 		routers.GetAuthRouter(PrivateGroup, PublicGroup)  // 註冊與登入路由，不檢查權限
+		routers.GetIndividualRouter(PrivateGroup)
 	}
 
 	global.EP_LOG.Info("router register success")

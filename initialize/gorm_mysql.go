@@ -10,16 +10,16 @@ import (
 	"gorm.io/gorm"
 )
 
-// GormMysql 初始化mysql資料庫
+
 func GormMysql() *gorm.DB {
 	m := global.EP_CONFIG.Mysql
 	if m.Dbname == "" {
 		return nil
 	}
 	mysqlConfig := mysql.Config{
-		DSN:                       m.Dsn(), // DSN data source name
-		DefaultStringSize:         191,     // string 类型字段的默认长度
-		SkipInitializeWithVersion: false,   // 根据版本自动配置
+		DSN:                       m.Dsn(),
+		DefaultStringSize:         191,
+		SkipInitializeWithVersion: false,
 	}
 	if db, err := gorm.Open(mysql.New(mysqlConfig), internal.Gorm.Config(m.Prefix, m.Singular)); err != nil {
 		global.EP_LOG.Fatal("Failed to connect to database", zap.Error(err))
@@ -33,15 +33,15 @@ func GormMysql() *gorm.DB {
 	}
 }
 
-// GormMysqlByConfig 初始化Mysql数据库用过传入配置
+
 func GormMysqlByConfig(m config.Mysql) *gorm.DB {
 	if m.Dbname == "" {
 		return nil
 	}
 	mysqlConfig := mysql.Config{
-		DSN:                       m.Dsn(), // DSN data source name
-		DefaultStringSize:         191,     // string 类型字段的默认长度
-		SkipInitializeWithVersion: false,   // 根据版本自动配置
+		DSN:                       m.Dsn(),
+		DefaultStringSize:         191,
+		SkipInitializeWithVersion: false,
 	}
 	if db, err := gorm.Open(mysql.New(mysqlConfig), internal.Gorm.Config(m.Prefix, m.Singular)); err != nil {
 		panic(err)

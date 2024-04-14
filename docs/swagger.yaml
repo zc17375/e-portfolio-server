@@ -7,6 +7,83 @@ definitions:
       msg:
         type: string
     type: object
+  model.Individual:
+    properties:
+      email:
+        example: john@example.com
+        type: string
+      head_img_path:
+        example: /images/john_doe.jpg
+        type: string
+      id:
+        type: string
+      job_title:
+        example: Software Engineer
+        type: string
+      name:
+        example: John Doe
+        type: string
+      projects:
+        items:
+          $ref: '#/definitions/model.Project'
+        type: array
+      resume_link:
+        example: https://example.com/john_doe_resume.pdf
+        type: string
+      skills:
+        example:
+        - Golang
+        - ' JavaScript'
+        - ' Python'
+        items:
+          type: string
+        type: array
+      social_media:
+        $ref: '#/definitions/model.SocialMedia'
+      user_uuid:
+        type: string
+    type: object
+  model.Project:
+    properties:
+      demo_link:
+        example: https://example.com/project_x_demo
+        type: string
+      github_rep_link:
+        example: https://github.com/johndoe/project_x
+        type: string
+      id:
+        type: string
+      introduce:
+        example: A project for implementing microservices architecture.
+        type: string
+      name:
+        example: Project X
+        type: string
+      skills:
+        example:
+        - '[''Golang'''
+        - ' ''Docker'''
+        - ' ''Kubernetes'']'
+        items:
+          type: string
+        type: array
+      user_id:
+        type: string
+    type: object
+  model.SocialMedia:
+    properties:
+      facebook:
+        example: johndoe
+        type: string
+      github:
+        example: johndoe
+        type: string
+      linkedin:
+        example: johndoe
+        type: string
+      user_id:
+        type: string
+    type: object
   model.User:
     properties:
       createdAt:
@@ -45,11 +122,11 @@ definitions:
     properties:
       account:
         description: 帳號
-        example: 信箱或密碼
+        example: "0912345678"
         type: string
       password:
         description: 密碼
-        example: 密碼
+        example: "123456"
         type: string
     required:
     - account
@@ -165,6 +242,25 @@ paths:
       summary: 會員註冊
       tags:
       - Auth
+  /v1/individual/create:
+    post:
+      parameters:
+      - description: 個人經歷
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Individual'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 新增個人經歷資訊
+      tags:
+      - User
   /v1/user/portfolio:
     get:
       produces:
