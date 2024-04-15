@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	"errors"
-	"fmt"
+	"strconv"
 
 	"github.com/zc17375/e-portfolio-server/global"
 	"github.com/zc17375/e-portfolio-server/model"
@@ -43,11 +43,10 @@ func (is *IndividualService) CreateIndividual(ctx context.Context, indivi model.
 
 		// 建立Projects UserId
 		if len(indivi.Projects) > 0 {
-			for i, project := range indivi.Projects {
-				fmt.Println(project.ID == primitive.NilObjectID)
+			for i, _ := range indivi.Projects {
 				// 判斷ID如果為0則給新的ID
-				if indivi.Projects[i].ID == primitive.NilObjectID {
-					indivi.Projects[i].ID = primitive.NewObjectID()
+				if indivi.Projects[i].ID == "0" {
+					indivi.Projects[i].ID = strconv.Itoa(i + 1)
 					indivi.Projects[i].UserID = indivi.ID
 				}
 			}
@@ -72,11 +71,27 @@ func (is *IndividualService) UpdateIndividual(ctx context.Context, indivi model.
 
 	// 將user的individual資料找出來
 	filter := bson.M{"user_uuid": uuid}
-	// var indiModel model.Individual
-	// err := indi.IndiviCollection.FindOne(ctx, filter).Decode(&indiModel)
-	// if err != nil {
-	// 	return mongo.UpdateResult{}, err
-	// }
+	var indiModel model.Individual
+	err := indi.IndiviCollection.FindOne(ctx, filter).Decode(&indiModel)
+	if err != nil {
+		return mongo.UpdateResult{}, err
+	}
+
+	// 如果Struct的欄位是Struct則無法用omitempty解決，欄位為空值則忽略
+	if (indivi.SocialMedia == model.SocialMedia{}) {
+		indivi.SocialMedia = indiModel.SocialMedia
+	}
+
+	// 建立Projects UserId
+	if len(indivi.Projects) > 0 {
+		for i, _ := range indivi.Projects {
+			// 判斷ID如果為0則給新的ID
+			if indivi.Projects[i].ID == "0" {
+				indivi.Projects[i].ID = strconv.Itoa(i + 1)
+				indivi.Projects[i].UserID = indivi.ID
+			}
+		}
+	}
 
 	update := bson.M{"$set": indivi}
 

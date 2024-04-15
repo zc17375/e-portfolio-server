@@ -14,11 +14,11 @@ type Individual struct {
 	SocialMedia SocialMedia        `json:"social_media" bson:"social_media"`
 	Skills      []string           `json:"skills" bson:"skills,omitempty" example:"Golang, JavaScript, Python"`
 	ResumeLink  string             `json:"resume_link" bson:"resume_link,omitempty" example:"https://example.com/john_doe_resume.pdf"`
-	Projects    []Project          `json:"projects" bson:"projects,omitempty"`
+	Projects    []Project          `json:"projects" bson:"projects"`
 }
 
 type Project struct {
-	ID            primitive.ObjectID `bson:"_id,omitempty"`
+	ID            string                `json:"id" bson:"id,omitempty"`
 	UserID        primitive.ObjectID `json:"user_id" bson:"user_id,omitempty"`
 	Name          string             `json:"name" bson:"name,omitempty" example:"Project X"`
 	Skills        []string           `json:"skills" bson:"skills,omitempty" example:"['Golang', 'Docker', 'Kubernetes']"`
