@@ -245,7 +245,7 @@ paths:
   /v1/individual/create:
     post:
       parameters:
-      - description: 個人經歷
+      - description: 個人作品集資料
         in: body
         name: data
         required: true
@@ -258,7 +258,26 @@ paths:
           description: OK
       security:
       - ApiKeyAuth: []
-      summary: 新增個人經歷資訊
+      summary: 新增個人作品集資料
+      tags:
+      - User
+  /v1/individual/update:
+    post:
+      parameters:
+      - description: 更新個人作品集資料
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Individual'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 更新個人作品集資料
       tags:
       - User
   /v1/user/portfolio:

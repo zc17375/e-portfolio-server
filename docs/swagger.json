@@ -131,10 +131,42 @@
                 "tags": [
                     "User"
                 ],
-                "summary": "新增個人經歷資訊",
+                "summary": "新增個人作品集資料",
                 "parameters": [
                     {
-                        "description": "個人經歷",
+                        "description": "個人作品集資料",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Individual"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/individual/update": {
+            "post": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "更新個人作品集資料",
+                "parameters": [
+                    {
+                        "description": "更新個人作品集資料",
                         "name": "data",
                         "in": "body",
                         "required": true,
