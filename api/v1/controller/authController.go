@@ -136,3 +136,32 @@ func (a *AuthApi) RefreshToken(c *gin.Context) {
 	// 取得Token並返回結果
 	a.GenerateToken(c, user)
 }
+
+// Delete User
+// @Tags     Auth
+// @Summary  註銷帳號
+// @Produce   application/json
+// @Success  200
+// @Router   /v1/auth/delete [get]
+// @Security ApiKeyAuth
+func (a *AuthApi) DeleteUser(c *gin.Context) {
+	claims, exists := c.Get("claims")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "No claims found"})
+		return
+	}
+
+    // 將 claims 用CustomClaims接值
+	customClaims, ok := claims.(*request.CustomClaims)
+	if !ok {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Invalid claims type"})
+		return
+	}
+
+	delete, err := authService.DeleteUser(customClaims.BaseClaims.UUID)
+	if !delete {
+		common.FailWithMessage(err.Error(), c)
+	} else {
+		common.OkWithMessage("註銷帳號成功", c)
+	}
+}

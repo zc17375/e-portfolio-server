@@ -15,6 +15,27 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/v1/auth/delete": {
+            "get": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "註銷帳號",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/v1/auth/login": {
             "post": {
                 "produces": [
@@ -137,7 +158,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "Individual"
                 ],
                 "summary": "新增個人作品集資料",
                 "parameters": [
@@ -169,7 +190,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "Individual"
                 ],
                 "summary": "更新個人作品集資料",
                 "parameters": [

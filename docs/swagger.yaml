@@ -178,6 +178,18 @@ info:
   title: E-Portfolio Swagger API接口文件
   version: v1.0.0
 paths:
+  /v1/auth/delete:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 註銷帳號
+      tags:
+      - Auth
   /v1/auth/login:
     post:
       parameters:
@@ -260,7 +272,7 @@ paths:
       - ApiKeyAuth: []
       summary: 新增個人作品集資料
       tags:
-      - User
+      - Individual
   /v1/individual/update:
     post:
       parameters:
@@ -279,7 +291,7 @@ paths:
       - ApiKeyAuth: []
       summary: 更新個人作品集資料
       tags:
-      - User
+      - Individual
   /v1/user/portfolio:
     get:
       produces:

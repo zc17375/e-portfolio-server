@@ -13,8 +13,8 @@ import (
 
 type IndividualApi struct{}
 
-// UserTest
-// @Tags     User
+// Create Individual
+// @Tags     Individual
 // @Summary  新增個人作品集資料
 // @Produce   application/json
 // @Param    data  body      model.Individual true "個人作品集資料"
@@ -48,8 +48,8 @@ func (i *IndividualApi) CreateIndividual(c *gin.Context) {
 	common.OkWithDetailed(newIndivi, "新增資料成功", c)
 }
 
-// UserTest
-// @Tags     User
+// Update Individual
+// @Tags     Individual
 // @Summary  更新個人作品集資料
 // @Produce   application/json
 // @Param    data  body      model.Individual true "更新個人作品集資料"
