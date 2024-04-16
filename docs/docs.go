@@ -211,20 +211,50 @@ const docTemplate = `{
                 }
             }
         },
-        "/v1/user/portfolio": {
-            "get": {
-                "security": [
-                    {
-                        "ApiKeyAuth": []
-                    }
-                ],
+        "/v1/portfolio/list": {
+            "post": {
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "User"
+                    "Portfolio"
                 ],
-                "summary": "token測試",
+                "summary": "個人作品集列表",
+                "parameters": [
+                    {
+                        "description": "取得分頁列表",
+                        "name": "data",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/common.Pagination"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/v1/portfolio/{userName}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Portfolio"
+                ],
+                "summary": "個人作品集",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user Name",
+                        "name": "userName",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK"
@@ -234,6 +264,38 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "common.Pagination": {
+            "type": "object",
+            "properties": {
+                "currentPage": {
+                    "description": "當前頁碼",
+                    "type": "integer",
+                    "example": 1
+                },
+                "keywords": {
+                    "description": "關鍵字",
+                    "type": "string",
+                    "example": "software"
+                },
+                "pageSize": {
+                    "description": "每頁大小",
+                    "type": "integer",
+                    "example": 10
+                },
+                "sortBy": {
+                    "type": "string",
+                    "example": "name"
+                },
+                "totalPages": {
+                    "description": "總頁數",
+                    "type": "integer"
+                },
+                "totalRecords": {
+                    "description": "總記錄數",
+                    "type": "integer"
+                }
+            }
+        },
         "common.Response": {
             "type": "object",
             "properties": {
@@ -249,6 +311,9 @@ const docTemplate = `{
         "model.Individual": {
             "type": "object",
             "properties": {
+                "created_at": {
+                    "type": "string"
+                },
                 "email": {
                     "type": "string",
                     "example": "john@example.com"
@@ -285,14 +350,17 @@ const docTemplate = `{
                     },
                     "example": [
                         "Golang",
-                        " JavaScript",
-                        " Python"
+                        "JavaScript",
+                        "Python"
                     ]
                 },
                 "social_media": {
                     "$ref": "#/definitions/model.SocialMedia"
                 },
-                "user_uuid": {
+                "updated_at": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }

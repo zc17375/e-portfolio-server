@@ -1,24 +1,28 @@
 package model
 
 import (
+	"time"
+
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type Individual struct {
 	ID          primitive.ObjectID `bson:"_id,omitempty"`
-	UserUUID    string             `json:"user_uuid" bson:"user_uuid,omitempty"`
+	UserName    string             `json:"username" bson:"username,omitempty"`
 	Name        string             `json:"name" bson:"name,omitempty" example:"John Doe"`
 	JobTitle    string             `json:"job_title" bson:"job_title,omitempty" example:"Software Engineer"`
 	HeadImgPath string             `json:"head_img_path" bson:"head_img_path,omitempty" example:"/images/john_doe.jpg"`
 	Email       string             `json:"email" bson:"email,omitempty" example:"john@example.com"`
 	SocialMedia SocialMedia        `json:"social_media" bson:"social_media"`
-	Skills      []string           `json:"skills" bson:"skills,omitempty" example:"Golang, JavaScript, Python"`
+	Skills      []string           `json:"skills" bson:"skills,omitempty" example:"Golang,JavaScript,Python"`
 	ResumeLink  string             `json:"resume_link" bson:"resume_link,omitempty" example:"https://example.com/john_doe_resume.pdf"`
 	Projects    []Project          `json:"projects" bson:"projects"`
+	CreatedAt    time.Time          `json:"created_at" bson:"created_at"`
+    UpdatedAt    time.Time          `json:"updated_at" bson:"updated_at"`
 }
 
 type Project struct {
-	ID            string                `json:"id" bson:"id,omitempty"`
+	ID            string             `json:"id" bson:"id"`
 	UserID        primitive.ObjectID `json:"user_id" bson:"user_id,omitempty"`
 	Name          string             `json:"name" bson:"name,omitempty" example:"Project X"`
 	Skills        []string           `json:"skills" bson:"skills,omitempty" example:"['Golang', 'Docker', 'Kubernetes']"`

@@ -24,6 +24,12 @@ type User struct {
 
 
 func (model *User) IsUserExist(u User) bool {
-	// 判断手機或信箱是否注册
+	// 判斷手機或信箱是否註冊
 	return !errors.Is(global.EP_DB.Where("phone = ? OR email = ?", u.Phone, u.Email).First(model).Error, gorm.ErrRecordNotFound)
 }
+
+func (model *User) IsUserNameExist(u User) bool {
+	// 判斷使用者名稱是否註冊
+	return !errors.Is(global.EP_DB.Where("username = ?", u.Username).First(model).Error, gorm.ErrRecordNotFound)
+}
+

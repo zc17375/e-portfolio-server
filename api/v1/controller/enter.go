@@ -7,7 +7,7 @@ import (
 type ApiGroup struct {
 	AuthApi
 	HelloApi
-	UserApi
+	PortfolioApi
 	IndividualApi
 }
 
@@ -15,6 +15,7 @@ var (
 	authService = service.ServiceGroupApp.AuthService
 	helloService = service.ServiceGroupApp.HelloService
 	individualService = service.ServiceGroupApp.IndividualService
+	portfolioService = service.ServiceGroupApp.PortfolioService
 )
 
 var ApiGroupApp = new(ApiGroup)

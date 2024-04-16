@@ -14,7 +14,7 @@ import (
 
 type IndividualService struct {
 	IndiviCollection  *mongo.Collection
-	ProjectCollection *mongo.Collection
+	// ProjectCollection *mongo.Collection
 }
 
 // 載入相關Collection
@@ -25,18 +25,18 @@ func NewIndividualService(db *mongo.Database) *IndividualService {
 	}
 }
 
-func (is *IndividualService) CreateIndividual(ctx context.Context, indivi model.Individual, uuid string) (mongo.InsertOneResult, error) {
+func (is *IndividualService) CreateIndividual(ctx context.Context, indivi model.Individual, username string) (mongo.InsertOneResult, error) {
 	indi := NewIndividualService(global.EP_MongoDB)
 
 	// 檢查是否已存在user資料
-	filter := bson.M{"user_uuid": uuid}
+	filter := bson.M{"username": username}
 	var result bson.M
 	err := indi.IndiviCollection.FindOne(context.Background(), filter).Decode(&result)
 	if err == mongo.ErrNoDocuments {
 
 		// 建立individual ID & User UUID
 		indivi.ID = primitive.NewObjectID()
-		indivi.UserUUID = uuid
+		indivi.UserName = username
 
 		// 建立SocialMedia UserId
 		indivi.SocialMedia.UserID = indivi.ID
@@ -45,7 +45,7 @@ func (is *IndividualService) CreateIndividual(ctx context.Context, indivi model.
 		if len(indivi.Projects) > 0 {
 			for i, _ := range indivi.Projects {
 				// 判斷ID如果為0則給新的ID
-				if indivi.Projects[i].ID == "0" {
+				if indivi.Projects[i].ID == "0" || indivi.Projects[i].ID == "" {
 					indivi.Projects[i].ID = strconv.Itoa(i + 1)
 					indivi.Projects[i].UserID = indivi.ID
 				}

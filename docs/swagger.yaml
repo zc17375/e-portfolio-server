@@ -1,4 +1,28 @@
 definitions:
+  common.Pagination:
+    properties:
+      currentPage:
+        description: 當前頁碼
+        example: 1
+        type: integer
+      keywords:
+        description: 關鍵字
+        example: software
+        type: string
+      pageSize:
+        description: 每頁大小
+        example: 10
+        type: integer
+      sortBy:
+        example: name
+        type: string
+      totalPages:
+        description: 總頁數
+        type: integer
+      totalRecords:
+        description: 總記錄數
+        type: integer
+    type: object
   common.Response:
     properties:
       code:
@@ -9,6 +33,8 @@ definitions:
     type: object
   model.Individual:
     properties:
+      created_at:
+        type: string
       email:
         example: john@example.com
         type: string
@@ -33,14 +59,16 @@ definitions:
       skills:
         example:
         - Golang
-        - ' JavaScript'
-        - ' Python'
+        - JavaScript
+        - Python
         items:
           type: string
         type: array
       social_media:
         $ref: '#/definitions/model.SocialMedia'
-      user_uuid:
+      updated_at:
+        type: string
+      username:
         type: string
     type: object
   model.Project:
@@ -292,18 +320,38 @@ paths:
       summary: 更新個人作品集資料
       tags:
       - Individual
-  /v1/user/portfolio:
+  /v1/portfolio/{userName}:
     get:
+      parameters:
+      - description: user Name
+        in: path
+        name: userName
+        required: true
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
-      security:
-      - ApiKeyAuth: []
-      summary: token測試
+      summary: 個人作品集
       tags:
-      - User
+      - Portfolio
+  /v1/portfolio/list:
+    post:
+      parameters:
+      - description: 取得分頁列表
+        in: body
+        name: data
+        schema:
+          $ref: '#/definitions/common.Pagination'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: 個人作品集列表
+      tags:
+      - Portfolio
 securityDefinitions:
   ApiKeyAuth:
     in: header

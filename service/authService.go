@@ -41,6 +41,11 @@ func (as *AuthService) Register(u model.User) (model.User, error) {
 		return user, errors.New("此信箱或手機號碼已被註冊")
 	}
 
+	//檢查username
+	if user.IsUserNameExist(u) {
+		return user, errors.New("此使用者名稱已被註冊")
+	}
+
 	// 新增uuid並且密碼加密
 	u.Password = utils.BcryptHash(u.Password)
 	u.UUID = uuid.New()
@@ -57,7 +62,7 @@ func (as *AuthService) DeleteUser(uuid uuid.UUID) (bool, error) {
 
 	// 更新Delete date and disable
 	user.Disable = 1
-	user.DeletedAt = gorm.DeletedAt{Time: time.Now(), Valid: true} 
+	user.DeletedAt = gorm.DeletedAt{Time: time.Now(), Valid: true}
 	// 更新 DeletedAt 欄位
 	result := global.EP_DB.Model(&user).Updates(user)
 	if result.Error != nil {

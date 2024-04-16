@@ -36,9 +36,9 @@ func Routers() *gin.Engine {
 	PrivateGroup := Router.Group(global.EP_CONFIG.System.RouterPrefix)
 	PrivateGroup.Use(middleware.JWTAuth())
 	{
-		routers.GetUserRouter(PrivateGroup) // 注册用户路由
-		routers.GetAuthRouter(PrivateGroup, PublicGroup)  // 註冊與登入路由，不檢查權限
-		routers.GetIndividualRouter(PrivateGroup)
+		routers.GetAuthRouter(PrivateGroup, PublicGroup) // 註冊與登入路由，不檢查權限
+		routers.GetIndividualRouter(PrivateGroup)        // 新增與編輯個人資訊相關
+		routers.GetPortfolioRouter(PublicGroup)          // 個人作品集相關
 	}
 
 	global.EP_LOG.Info("router register success")

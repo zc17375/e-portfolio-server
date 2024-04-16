@@ -99,7 +99,7 @@ func (a *AuthApi) Register(c *gin.Context) {
 	userReturn, err := authService.Register(*user)
 	if err != nil {
 		global.EP_LOG.Error("註冊失敗!", zap.Error(err))
-		common.FailWithDetailed(nil, "註冊會員失敗:此信箱或手機號碼已被註冊", c)
+		common.FailWithDetailed(nil, err.Error(), c)
 		return
 	}
 	common.OkWithDetailed(response.UserResponse{User: userReturn}, "註冊會員成功", c)

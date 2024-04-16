@@ -39,9 +39,9 @@ func (i *IndividualApi) CreateIndividual(c *gin.Context) {
 	}
 
 	// 新增資料
-	newIndivi, err := individualService.CreateIndividual(c, reciveData, user.UUID.String())
+	newIndivi, err := individualService.CreateIndividual(c, reciveData, user.Username)
 	if err != nil {
-		global.EP_LOG.Error(user.UUID.String() + "新增Individual資料失敗", zap.Error(err))
+		global.EP_LOG.Error(user.Username+ "新增Individual資料失敗", zap.Error(err))
 		common.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -80,5 +80,4 @@ func (i *IndividualApi) UpdateIndividual(c *gin.Context) {
 		return
 	}
 	common.OkWithDetailed(updateIndivi, "更新資料成功", c)
-
 }

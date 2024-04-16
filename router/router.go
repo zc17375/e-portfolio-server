@@ -3,8 +3,8 @@ package router
 // 註冊Router
 type RouterGroup struct {
 	AuthRouter
-	// HelloRouter
-	UserRouter
+	IndividualRouter
+	PortfolioRouter
 }
 
 var RouterGroupApp = new(RouterGroup)
