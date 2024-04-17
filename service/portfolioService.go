@@ -44,7 +44,7 @@ func (ps *PortfolioService) GetAllPortfolio(ctx context.Context, pageRequest com
 	filter := bson.M{}
 
 	if len(pageRequest.KeyWords) > 0 {
-	// 使用正則表達式進行模糊匹配
+		// 使用正則表達式進行模糊匹配
 		keywordFilter := bson.M{"$regex": pageRequest.KeyWords, "$options": "i"}
 		filter["$or"] = []bson.M{
 			{"job_title": keywordFilter},
@@ -76,9 +76,9 @@ func (ps *PortfolioService) GetAllPortfolio(ctx context.Context, pageRequest com
 	// 	"head_img_path":     1,
 	// 	// "_id":      0, // 不返回 _id 字段
 	// }
-	
+
 	//排序
-	sortRule := bson.D{{Key: "name", Value: 1}} 
+	sortRule := bson.D{{Key: "created_at", Value: 1}}
 	options := options.Find().SetSkip(skip).SetLimit(limit).SetSort(sortRule)
 
 	cursor, err := indi.IndiviCollection.Find(ctx, filter, options)
