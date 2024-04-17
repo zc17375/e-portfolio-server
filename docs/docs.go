@@ -332,9 +332,6 @@ const docTemplate = `{
         "model.Individual": {
             "type": "object",
             "properties": {
-                "created_at": {
-                    "type": "string"
-                },
                 "email": {
                     "type": "string",
                     "example": "john@example.com"
@@ -374,9 +371,6 @@ const docTemplate = `{
                 },
                 "social_media": {
                     "$ref": "#/definitions/model.SocialMedia"
-                },
-                "updated_at": {
-                    "type": "string"
                 },
                 "username": {
                     "type": "string"

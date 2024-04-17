@@ -33,8 +33,6 @@ definitions:
     type: object
   model.Individual:
     properties:
-      created_at:
-        type: string
       email:
         example: john@example.com
         type: string
@@ -64,8 +62,6 @@ definitions:
         type: array
       social_media:
         $ref: '#/definitions/model.SocialMedia'
-      updated_at:
-        type: string
       username:
         type: string
     type: object

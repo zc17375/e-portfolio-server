@@ -98,6 +98,9 @@ func (is *IndividualService) UpdateIndividual(ctx context.Context, indivi model.
 		}
 	}
 
+	// 建立時間
+	indivi.UpdatedAt = time.Now()
+
 	update := bson.M{"$set": indivi}
 
 	// 执行更新操作

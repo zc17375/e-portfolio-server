@@ -18,8 +18,8 @@ type Individual struct {
 	Skills      []string           `json:"skills" bson:"skills,omitempty" example:"Golang,JavaScript,Python"`
 	ResumeLink  string             `json:"resume_link" bson:"resume_link,omitempty" example:"https://example.com/john_doe_resume.pdf"`
 	Projects    []Project          `json:"projects" bson:"projects"`
-	CreatedAt   time.Time          `json:"created_at" bson:"created_at"`
-	UpdatedAt   time.Time          `json:"updated_at" bson:"updated_at"`
+	CreatedAt   time.Time          `json:"-" bson:"created_at,omitempty"`
+	UpdatedAt   time.Time          `json:"-" bson:"updated_at"`
 }
 
 type Project struct {
