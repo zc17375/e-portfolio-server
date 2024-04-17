@@ -1,0 +1,6 @@
+# .dockerignore
+*.log
+.git
+.vscode
+data/
+mysql_data/

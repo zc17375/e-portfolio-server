@@ -6,8 +6,6 @@ e-portfolio-server
 
 ```
     docker run -p 3306:3306 -d --name mysql -e MYSQL_ROOT_PASSWORD=root -e TZ=Asia/Taipei mysql:latest
-
-
 ```
 
 # Install related Dependency packages
@@ -44,38 +42,31 @@ go get go.mongodb.org/mongo-driver/mongo
 
 ```
 
-mongodb collection desing
-
+docker related command
 ```
-{
-  "_id": ObjectId("..."),          // MongoDB自動生成的唯一識別符
-  "name": "姓名",
-  "job_title": "職稱",
-  "head_img_path": "頭像圖片路徑",
-  "email": "電子郵件",
-  "media": {
-    "Github": "Github 連結",
-    "Linkedin": "Linkedin 連結",
-    "Facebook": "Facebook 連結"
-  },
-  "skills": ["JavaScript", "TypeScript", "React", "Vue", "..."],
-  "projects": [
-    {
-      "name": "專案1名稱",
-      "skills": ["專案1相關技能"],
-      "introduce": "專案1介紹",
-      "demo_link": "專案1演示連結",
-      "github_rep_link": "專案1 Github 倉庫連結"
-    },
-    {
-      "name": "專案2名稱",
-      "skills": ["專案2相關技能"],
-      "introduce": "專案2介紹",
-      "demo_link": "專案2演示連結",
-      "github_rep_link": "專案2 Github 倉庫連結"
-    }
-  ],
-  "resume_link": "履歷連結"
-}
+    # 建立docker build
+    docker build -f Dockerfile -t go-app .
+
+    # 運行建立的docker build
+    docker run -p 8080:8888 --name my-go-app --link mysql:mysql go-app  # 連單個container
+    docker run -p 8080:8888 --name my-go-app --network MONGO go-app # 加入到network
+
+    # 查看所有images
+    docker images
+
+    # 顯示所有容器的清單，包括正在執行的和已停止的
+    docker ps -a
+
+    # 停止運行 docker container
+    docker stop  <容器名稱或ID>
+
+    # 刪除 docker container
+    docker rm <容器名稱或ID>
+
+    # 
+
+
+
+
 
 ```

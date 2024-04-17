@@ -66,7 +66,7 @@ cors:
 
 # mysql connect configuration
 mysql:
-    path: "backend-mysql" # 如果要連docker則用container name
+    path: ""
     port: "3306"
     config: "parseTime=true&loc=Local"
     db-name: "portfolio"
@@ -81,6 +81,6 @@ mysql:
 mongo:
     username: "admin"
     password: "admin"
-    host: "backend-mongo" # 如果要連docker則用container name
+    host: "127.0.0.1"
     port: "27017"
     db-name: "portfolio"
