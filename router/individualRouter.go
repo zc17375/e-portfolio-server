@@ -13,7 +13,8 @@ func (s *AuthRouter) GetIndividualRouter(Router *gin.RouterGroup) {
 
 	individualApi := v1.ApiGroupApp.IndividualApi
 	{
-		individualRouter.POST("create", individualApi.CreateIndividual) //新增個人作品相關資料
-		individualRouter.POST("update", individualApi.UpdateIndividual) //更新個人作品相關資料
+		individualRouter.POST("create", individualApi.CreateIndividual)   //新增個人作品相關資料
+		individualRouter.POST("update", individualApi.UpdateIndividual)   //更新個人作品相關資料
+		individualRouter.DELETE("delete", individualApi.DeleteIndividual) //刪除個人作品相關資料
 	}
 }

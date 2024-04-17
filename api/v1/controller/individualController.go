@@ -39,9 +39,9 @@ func (i *IndividualApi) CreateIndividual(c *gin.Context) {
 	}
 
 	// 新增資料
-	newIndivi, err := individualService.CreateIndividual(c, reciveData, user.Username)
+	newIndivi, err := individualService.CreateIndividual(c, reciveData, user.Username, user.UUID.String())
 	if err != nil {
-		global.EP_LOG.Error(user.Username+ "新增Individual資料失敗", zap.Error(err))
+		global.EP_LOG.Error(user.Username+"新增Individual資料失敗", zap.Error(err))
 		common.FailWithMessage(err.Error(), c)
 		return
 	}
@@ -80,4 +80,29 @@ func (i *IndividualApi) UpdateIndividual(c *gin.Context) {
 		return
 	}
 	common.OkWithDetailed(updateIndivi, "更新資料成功", c)
+}
+
+// Delete Individual
+// @Tags     Individual
+// @Summary  刪除個人作品集資料
+// @Produce   application/json
+// @Success  200
+// @Router   /v1/individual/delete [delete]
+// @Security ApiKeyAuth
+func (i *IndividualApi) DeleteIndividual(c *gin.Context) {
+	claims, exists := c.Get("claims")
+	if !exists {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "No claims found"})
+		return
+	}
+	// 取得使用者ID
+	customClaims := claims.(*request.CustomClaims)
+	user := customClaims.BaseClaims
+
+	deleteIndivi, err := individualService.DeleteIndividual(c, user.UUID.String())
+	if err != nil {
+		common.FailWithMessage(err.Error(), c)
+		return
+	}
+	common.OkWithDetailed(deleteIndivi, "刪除資料成功", c)
 }

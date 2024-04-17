@@ -6,6 +6,7 @@ import (
 	"github.com/zc17375/e-portfolio-server/global"
 	"github.com/zc17375/e-portfolio-server/model"
 	"github.com/zc17375/e-portfolio-server/model/common"
+	"github.com/zc17375/e-portfolio-server/model/response"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -41,18 +42,16 @@ func (ps *PortfolioService) GetUserPortfolio(ctx context.Context, userName strin
 
 func (ps *PortfolioService) GetAllPortfolio(ctx context.Context, pageRequest common.Pagination) (interface{}, error) {
 	filter := bson.M{}
-	if pageRequest.KeyWords != "" {
-		// 使用正则表达式进行模糊匹配
-		keywordFilter := bson.M{"$regex": pageRequest.KeyWords, "$options": "i"}
 
-		// 为每个字段添加搜索条件
+	if len(pageRequest.KeyWords) > 0 {
+	// 使用正則表達式進行模糊匹配
+		keywordFilter := bson.M{"$regex": pageRequest.KeyWords, "$options": "i"}
 		filter["$or"] = []bson.M{
 			{"job_title": keywordFilter},
-			bson.M{"skills": bson.M{"$elemMatch": keywordFilter}},
-			// 添加更多字段
+			{"skills": bson.M{"$elemMatch": keywordFilter}},
+			// 增加更多搜尋欄位
 		}
 	}
-
 	indi := NewIndividualService(global.EP_MongoDB)
 
 	totalRecords, err := indi.IndiviCollection.CountDocuments(ctx, filter)
@@ -61,16 +60,27 @@ func (ps *PortfolioService) GetAllPortfolio(ctx context.Context, pageRequest com
 		return totalRecords, err
 	}
 
-	// 计算总页数
+	// 計算總筆數
 	totalPages := totalRecords / int64(pageRequest.PageSize)
 	if totalRecords%int64(pageRequest.PageSize) > 0 {
 		totalPages++
 	}
 
-	// 执行分页查询
+	// 分頁條件
 	skip := int64((pageRequest.CurrentPage - 1) * pageRequest.PageSize)
 	limit := int64(pageRequest.PageSize)
-	options := options.Find().SetSkip(skip).SetLimit(limit)
+
+	// 如果要篩選返回的欄位options.SetProjection(projection)
+	// projection := bson.M{
+	// 	"name": 1,
+	// 	"head_img_path":     1,
+	// 	// "_id":      0, // 不返回 _id 字段
+	// }
+	
+	//排序
+	sortRule := bson.D{{Key: "name", Value: 1}} 
+	options := options.Find().SetSkip(skip).SetLimit(limit).SetSort(sortRule)
+
 	cursor, err := indi.IndiviCollection.Find(ctx, filter, options)
 	if err != nil {
 		global.EP_LOG.Error("取得分頁列表失敗!", zap.Error(err))
@@ -79,7 +89,7 @@ func (ps *PortfolioService) GetAllPortfolio(ctx context.Context, pageRequest com
 	defer cursor.Close(ctx)
 
 	// 解码查询结果
-	var results []model.Individual
+	var results []response.PortfolioListResponse
 	if err := cursor.All(ctx, &results); err != nil {
 		global.EP_LOG.Error("查詢結果失敗!", zap.Error(err))
 		return results, err

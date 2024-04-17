@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"strconv"
+	"time"
 
 	"github.com/zc17375/e-portfolio-server/global"
 	"github.com/zc17375/e-portfolio-server/model"
@@ -13,7 +14,7 @@ import (
 )
 
 type IndividualService struct {
-	IndiviCollection  *mongo.Collection
+	IndiviCollection *mongo.Collection
 	// ProjectCollection *mongo.Collection
 }
 
@@ -25,7 +26,7 @@ func NewIndividualService(db *mongo.Database) *IndividualService {
 	}
 }
 
-func (is *IndividualService) CreateIndividual(ctx context.Context, indivi model.Individual, username string) (mongo.InsertOneResult, error) {
+func (is *IndividualService) CreateIndividual(ctx context.Context, indivi model.Individual, username, uuid string) (mongo.InsertOneResult, error) {
 	indi := NewIndividualService(global.EP_MongoDB)
 
 	// 檢查是否已存在user資料
@@ -36,6 +37,7 @@ func (is *IndividualService) CreateIndividual(ctx context.Context, indivi model.
 
 		// 建立individual ID & User UUID
 		indivi.ID = primitive.NewObjectID()
+		indivi.UserUUID = uuid
 		indivi.UserName = username
 
 		// 建立SocialMedia UserId
@@ -51,6 +53,9 @@ func (is *IndividualService) CreateIndividual(ctx context.Context, indivi model.
 				}
 			}
 		}
+		// 建立時間
+		indivi.CreatedAt = time.Now()
+		indivi.UpdatedAt = time.Now()
 
 		insert, err := indi.IndiviCollection.InsertOne(ctx, indivi)
 		if err != nil {
@@ -103,4 +108,19 @@ func (is *IndividualService) UpdateIndividual(ctx context.Context, indivi model.
 
 	return *updateResult, nil
 
+}
+
+func (is *IndividualService) DeleteIndividual(ctx context.Context, uuid string) (mongo.DeleteResult, error) {
+	indi := NewIndividualService(global.EP_MongoDB)
+
+	filter := bson.M{"user_uuid": uuid}
+
+	deleteResult, err := indi.IndiviCollection.DeleteOne(ctx, filter)
+	if err != nil {
+		return *deleteResult, err
+	}
+	if deleteResult.DeletedCount == 0 {
+		return  *deleteResult, errors.New("刪除資料失敗")
+	}
+	return *deleteResult, nil
 }

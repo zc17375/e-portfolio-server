@@ -179,6 +179,27 @@ const docTemplate = `{
                 }
             }
         },
+        "/v1/individual/delete": {
+            "delete": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Individual"
+                ],
+                "summary": "刪除個人作品集資料",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
         "/v1/individual/update": {
             "post": {
                 "security": [
@@ -322,9 +343,6 @@ const docTemplate = `{
                     "type": "string",
                     "example": "/images/john_doe.jpg"
                 },
-                "id": {
-                    "type": "string"
-                },
                 "job_title": {
                     "type": "string",
                     "example": "Software Engineer"
@@ -376,9 +394,6 @@ const docTemplate = `{
                     "type": "string",
                     "example": "https://github.com/johndoe/project_x"
                 },
-                "id": {
-                    "type": "string"
-                },
                 "introduce": {
                     "type": "string",
                     "example": "A project for implementing microservices architecture."
@@ -397,9 +412,6 @@ const docTemplate = `{
                         " 'Docker'",
                         " 'Kubernetes']"
                     ]
-                },
-                "user_id": {
-                    "type": "string"
                 }
             }
         },
@@ -417,9 +429,6 @@ const docTemplate = `{
                 "linkedin": {
                     "type": "string",
                     "example": "johndoe"
-                },
-                "user_id": {
-                    "type": "string"
                 }
             }
         },

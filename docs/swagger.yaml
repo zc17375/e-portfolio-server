@@ -41,8 +41,6 @@ definitions:
       head_img_path:
         example: /images/john_doe.jpg
         type: string
-      id:
-        type: string
       job_title:
         example: Software Engineer
         type: string
@@ -79,8 +77,6 @@ definitions:
       github_rep_link:
         example: https://github.com/johndoe/project_x
         type: string
-      id:
-        type: string
       introduce:
         example: A project for implementing microservices architecture.
         type: string
@@ -95,8 +91,6 @@ definitions:
         items:
           type: string
         type: array
-      user_id:
-        type: string
     type: object
   model.SocialMedia:
     properties:
@@ -108,8 +102,6 @@ definitions:
         type: string
       linkedin:
         example: johndoe
-        type: string
-      user_id:
         type: string
     type: object
   model.User:
@@ -299,6 +291,18 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: 新增個人作品集資料
+      tags:
+      - Individual
+  /v1/individual/delete:
+    delete:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      security:
+      - ApiKeyAuth: []
+      summary: 刪除個人作品集資料
       tags:
       - Individual
   /v1/individual/update:
