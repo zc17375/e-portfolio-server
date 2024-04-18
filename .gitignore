@@ -20,5 +20,6 @@
 # Go workspace file
 go.work
 log
-data
+mongo_data
 mysql_data
+data

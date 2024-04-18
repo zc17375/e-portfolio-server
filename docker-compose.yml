@@ -23,8 +23,8 @@ services:
         networks:
             - db_net
         volumes:
-            - "./data/db:/data/db"
-            - "./data/configdb:/data/configdb"
+            - "./mongo_data/db:/data/db"
+            - "./mongo_data/configdb:/data/configdb"
     backend-mongo-express:
         image: mongo-express:latest
         container_name: backend-mongo-express

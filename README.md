@@ -2,11 +2,35 @@
 
 e-portfolio-server
 
-# mysql database
+# Demo project
+
+1. 下載專案 (Clone project)
 
 ```
-    docker run -p 3306:3306 -d --name mysql -e MYSQL_ROOT_PASSWORD=root -e TZ=Asia/Taipei mysql:latest
+git clone https://github.com/zc17375/e-portfolio-server.git
 ```
+
+2. 執行 docer compose (exec docker compose)
+
+```
+docker compose up -d
+```
+
+3. 打開 swagger api 文件網址 (run swagger api)
+
+```
+http://127.0.0.1:8888/swagger/index.html
+```
+
+4. 測試 API 功能 (test api function)
+
+    ![Swagger API Document](./readme_img/image.png)
+
+5. 範例 (For Example)
+
+    ![Click Execute](./readme_img/image2.png)
+
+    ![server responsed](./readme_img/image3.png)
 
 # Install related Dependency packages
 
@@ -38,35 +62,6 @@ go get github.com/golang-jwt/jwt/v5
 
 # MONGODB
 go get go.mongodb.org/mongo-driver/mongo
-
-
-```
-
-docker related command
-```
-    # 建立docker build
-    docker build -f Dockerfile -t go-app .
-
-    # 運行建立的docker build
-    docker run -p 8080:8888 --name my-go-app --link mysql:mysql go-app  # 連單個container
-    docker run -p 8080:8888 --name my-go-app --network MONGO go-app # 加入到network
-
-    # 查看所有images
-    docker images
-
-    # 顯示所有容器的清單，包括正在執行的和已停止的
-    docker ps -a
-
-    # 停止運行 docker container
-    docker stop  <容器名稱或ID>
-
-    # 刪除 docker container
-    docker rm <容器名稱或ID>
-
-    # 
-
-
-
 
 
 ```
