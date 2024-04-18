@@ -28,6 +28,12 @@ http://127.0.0.1:8888/swagger/index.html
 
 5. 範例 (For Example)
 
+    點擊 Try it out
+
+    ![Click Try it out](./readme_img/image1.png)
+
+    點擊 Execute
+
     ![Click Execute](./readme_img/image2.png)
 
     ![server responsed](./readme_img/image3.png)
