@@ -44,7 +44,6 @@ services:
         container_name: backend-mysql
         environment:
             MYSQL_ROOT_PASSWORD: root
-            MYSQL_USER: root
             MYSQL_DATABASE: portfolio
         ports:
             - "3306:3306"
