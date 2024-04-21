@@ -10,23 +10,28 @@ e-portfolio-server
 git clone https://github.com/zc17375/e-portfolio-server.git
 ```
 
-2. 執行 docer compose (exec docker compose)
+2. 下載相關package包
+```
+go mod tidy
+```
+
+3. 執行 docer compose (exec docker compose)
 
 ```
 docker compose up -d
 ```
 
-3. 打開 swagger api 文件網址 (run swagger api)
+4. 打開 swagger api 文件網址 (run swagger api)
 
 ```
 http://127.0.0.1:8888/swagger/index.html
 ```
 
-4. 測試 API 功能 (test api function)
+5. 測試 API 功能 (test api function)
 
     ![Swagger API Document](./readme_img/image.png)
 
-5. 範例 (For Example)
+6. 範例 (For Example)
 
     點擊 Try it out
 
