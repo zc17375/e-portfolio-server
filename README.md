@@ -1,9 +1,54 @@
-# e-portfolio-server
+# <center>e-portfolio-server</center>
 
-e-portfolio-server
+e-portolio-server 是純後端專案，使用Ｇolang gin框架 + GORM + Mysql & MongoDB 實現 Restful API  
+並使用dockerfile & compose 容器化，未來將部署到ＧＣＰ上
+
+* 主要技術：
+    - JWT Auth
+    - GORM mysql CRUD
+    - MongoDB CRUD
+    - API Document：Swagger
+    - Log System：zap
+    - env management：Viper
+
+
+
+# 目錄結構
+```
+│  config.yaml
+│  docker-compose.yml
+│  Dockerfile
+│  go.mod
+│  go.sum
+│  LICENSE
+│  local_config.yaml
+│  main.go
+├─api
+│  └─v1
+│      └─controller  # API 版本管控
+│
+├─cmd
+│  └─internal  # Server啟動相關
+│
+├─config  # 相關環境設定:db、jwt、cors、zap
+│
+├─docs  # swagger 自動生成文件
+│
+├─global  # 定義全域變數
+│
+├─initialize  # 定義初始化參數 router、db
+│  └─internal
+├─middleware  # jwt驗證、Cors
+├─model  # 商業模型 API會用到的商業模型
+│  ├─common
+│  ├─request
+│  └─response
+├─router  # 定義路由
+├─service  # API 商業邏輯
+└─utils  # 常用工具 加解密、型態轉換
+```
 
 # Demo project
-
 1. 下載專案 (Clone project)
 
 ```
